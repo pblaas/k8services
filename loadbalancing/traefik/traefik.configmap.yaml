@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: traefik-conf
+data:
+  traefik.toml: |
+    # traefik.toml
+    debug = true
+    defaultEntryPoints = ["http","https"]
+    [entryPoints]
+      [entryPoints.http]
+      address = ":80"
+      [entryPoints.https]
+      address = ":443"
+        [entryPoints.https.tls]
+    [file]
+      watch = true    
+    [kubernetes]
+    [web]
+    address=":8081"
+    [acme]
+    email = "valid@email.ltd"
+    storage = "acme.json"
+    storageFile = "acme.json"
+    entryPoint = "https"
+    acmeLogging = true
+    onDemand = true
+    onHostRule = false
+    caServer = "https://acme-staging.api.letsencrypt.org/directory"
+    [[acme.domains]]
+      main = "youhost.k8s.yourdomain.nl"
+
