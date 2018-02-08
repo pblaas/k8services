@@ -37,7 +37,7 @@ spec:
       containers:
       - name: elasticsearch-client
         image: pblaas/elasticsearch:6.1.2
-        args: [ "-E", "cluster.name=$(cluster.name)", "-E", "node.data=false", "-E", "node.master=false", "-E", "node.name=$(MY_POD_NAME)", "-E", "elasticsearch-data-0.elasticsearch-data,elasticsearch-data-1.elasticsearch-data,elasticsearch-client-0.elasticsearch-client,elasticsearch-client-1.elasticsearch-client,elasticsearch-master-0.elasticsearch-master,elasticsearch-master-1.elasticsearch-master" ]
+        args: [ "-E", "cluster.name=$(cluster.name)", "-E", "node.data=false", "-E", "node.master=false", "-E", "node.name=$(MY_POD_NAME)", "-E", "discovery.zen.ping.unicast.hosts=elasticsearch-data-0.elasticsearch-data,elasticsearch-data-1.elasticsearch-data,elasticsearch-client-0.elasticsearch-client,elasticsearch-client-1.elasticsearch-client,elasticsearch-master-0.elasticsearch-master,elasticsearch-master-1.elasticsearch-master" ]
         imagePullPolicy: Always
         resources:
           requests:
