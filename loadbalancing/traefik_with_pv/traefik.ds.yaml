@@ -34,12 +34,12 @@ spec:
         role: edge-router
       terminationGracePeriodSeconds: 60
       volumes:
-        - name: config
-          configMap:
-            name: traefik-conf
         - name: acme
           persistentVolumeClaim:
             claimName: traefik-acme-pvc
+        - name: config
+          configMap:
+            name: traefik-conf
       containers:
       - image: traefik:latest
         name: traefik-ingress-lb
@@ -47,7 +47,7 @@ spec:
         volumeMounts:
           - mountPath: "/acme/"
             name: "acme"
-         - mountPath: "/config"
+          - mountPath: "/config"
             name: "config"
         args:
         #- -d
@@ -56,3 +56,4 @@ spec:
         - --kubernetes
         - --configFile=/config/traefik.toml
         - --logLevel=PANIC
+
