@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: traefik-conf
+data:
+  traefik.toml: |-
+    IdleTimeout = "180s"
+    MaxIdleConnsPerHost = 500
+    defaultEntryPoints = ["http", "https"]
+    debug = false
+
+    [retry]
+    attempts = 3
+
+    [kubernetes]
+
+    [acme]
+    email = "youremail@domain.ltd"
+    storage = "/acme/acme.json"
+    entryPoint = "https"
+    OnHostRule = true
+    onDemand = true
+    acmeLogging = true
+    caServer = "https://acme-staging.api.letsencrypt.org/directory"
+    [acme.httpChallenge]
+       entryPoint = "http"
+    [entryPoints]
+      [entryPoints.http]
+      address = ":80"
+      compress = true
+        [entryPoints.http.redirect]
+        entryPoint = "https"
+      [entryPoints.https]
+      address = ":443"
+        [entryPoints.https.tls]
