@@ -1,6 +1,7 @@
 kind: DaemonSet
 apiVersion: extensions/v1beta1
 metadata:
+  namespace: kube-system
   name: traefik-ingress-controller
   labels:
     k8s-app: traefik-ingress-lb
