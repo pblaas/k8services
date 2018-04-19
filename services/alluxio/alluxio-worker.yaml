@@ -65,5 +65,5 @@ spec:
             sizeLimit: "1G"
         - name: alluxio-domain
           hostPath:
-            path: /tmp/k8stmp
+            path: /opt/k8stmp
             type: Directory
