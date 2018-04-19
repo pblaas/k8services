@@ -12,8 +12,9 @@ Next create the minio deployment
 kubectl apply -f minio-deployment.yaml
 ```
 
-Follow-up with deployment of AlluxIO master
+Follow-up with deployment of storage PV and deployment of AlluxIO master
 ```
+kubectl apply -f alluxio-journal-volume.yaml
 kubectl apply -f alluxio-master.yaml
 ```
 
