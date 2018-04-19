@@ -11,4 +11,4 @@ spec:
   accessModes:
     - ReadWriteMany
   hostPath:
-    path: "/tmp/data"
+    path: "/tmp/k8stmp"
