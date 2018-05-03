@@ -12,7 +12,7 @@ spec:
     spec:
       hostNetwork: true
       containers:
-      - image: quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.10.2
+      - image: quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.14.0
         name: nginx
         imagePullPolicy: Always
         env:
