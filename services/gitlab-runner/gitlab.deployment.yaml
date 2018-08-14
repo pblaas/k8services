@@ -1,0 +1,53 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: gitlab-runner
+  namespace: gitlab
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: gitlab-runner
+  template:
+    metadata:
+      labels:
+        name: gitlab-runner
+    spec:
+      initContainers:
+      containers:
+      - name: gitlab-runner
+        args:
+        - run
+        image: pblaas/gitlab-runner:latest
+        imagePullPolicy: Always
+        env:
+        #- name: RUNNER_TAG_LIST
+        #  value: "ac, test"
+        - name: CI_SERVER_URL
+          value: "https://ci.git.domain.ltd/ci"
+        - name: REGISTRATION_TOKEN
+          value: "xxxxxxxxxxx"
+        - name: RUNNER_EXECUTOR
+          value: kubernetes
+        - name: KUBERNETES_NAMESPACE
+          value: gitlab
+        - name: KUBERNETES_PRIVILEGED
+          value: "true"
+        - name: REGISTER_LOCKED
+          value: "false"
+        - name: RUNNER_REQUEST_CONCURRENCY
+          value: "4"
+        - name: DOCKER_IMAGE
+          value: docker:latest
+        volumeMounts:
+        - mountPath: /etc/ssl/certs/tls-ca-bundle.pem
+          name: cacerts
+          readOnly: true
+      restartPolicy: Always
+      #imagePullSecrets:
+      #  - name: private-registry-key
+      volumes:
+      - hostPath:
+          path: /etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem 
+        name: cacerts
+

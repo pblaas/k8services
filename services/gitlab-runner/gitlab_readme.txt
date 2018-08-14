@@ -1,0 +1,43 @@
+## runner options
+  REGISTER_NON_INTERACTIVE: "true"
+  REGISTER_LOCKED: "false"
+  CI_SERVER_URL: "YOUR_GITLAB_CI_SERVER_URL"
+  METRICS_SERVER: "0.0.0.0:9100"
+  RUNNER_REQUEST_CONCURRENCY: "4"
+  RUNNER_EXECUTOR: "kubernetes"
+  KUBERNETES_NAMESPACE: "YOUR_GITLAB_BUILD_NAMESPACE"
+  KUBERNETES_PRIVILEGED: "true"
+  KUBERNETES_CPU_LIMIT: "1"
+  KUBERNETES_MEMORY_LIMIT: "1Gi"
+  KUBERNETES_SERVICE_CPU_LIMIT: "1"
+  KUBERNETES_SERVICE_MEMORY_LIMIT: "1Gi"
+  KUBERNETES_HELPER_CPU_LIMIT: "500m"
+  KUBERNETES_HELPER_MEMORY_LIMIT: "100Mi"
+  KUBERNETES_PULL_POLICY: "if-not-present"
+  KUBERNETES_TERMINATIONGRACEPERIODSECONDS: "10"
+  KUBERNETES_POLL_INTERVAL: "5"
+  KUBERNETES_POLL_TIMEOUT: "360"
+
+
+
+-Example-gitlab-ci.yml-
+
+stages:
+  - build
+  
+variables:
+  DOCKER_HOST: tcp://localhost:2375
+  DOCKER_DRIVER: overlay2
+
+services:
+  - docker:dind
+
+build_job:
+  image: docker:latest
+  stage: build
+  except:
+    - '/^skipci.*$/'
+  script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_BUILD_TOKEN" ci.registry.domain.ltd
+
+---
