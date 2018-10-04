@@ -12,6 +12,12 @@ rules:
   - jobs
   - cronjobs
   verbs: ["*"]
+- apiGroups:
+  - autoscaling
+  resources:
+  - horizontalpodautoscalers
+  verbs:
+  - '*'
 
 ---
 kind: RoleBinding
