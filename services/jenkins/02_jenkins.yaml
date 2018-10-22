@@ -139,11 +139,10 @@ data:
       <globalNodeProperties/>
     </hudson>
   plugins.txt: |+
-    kubernetes:1.12.6
-    kubernetes-pipeline-aggregator:1.5
+    kubernetes:1.13.0
     credentials-binding:1.16
     git:3.9.1
-    blueocean:1.5.0
+    blueocean:1.9.0
     workflow-job:2.25
 kind: ConfigMap
 metadata:
