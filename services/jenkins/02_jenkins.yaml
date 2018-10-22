@@ -139,20 +139,11 @@ data:
       <globalNodeProperties/>
     </hudson>
   plugins.txt: |+
-<<<<<<< HEAD
     kubernetes:1.13.0
     credentials-binding:1.16
     git:3.9.1
     blueocean:1.9.0
     workflow-job:2.25
-=======
-    kubernetes:1.12.7
-    kubernetes-pipeline-aggregator:1.9
-    credentials-binding:1.16
-    git:3.9.1
-    blueocean:1.5.0
-    workflow-job:2.26
->>>>>>> c54b3bce508c6b3e3a8c72003d0127727317b071
 kind: ConfigMap
 metadata:
   name: jenkins-configmap
