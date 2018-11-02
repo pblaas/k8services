@@ -22,12 +22,13 @@ data:
     [acme]
     email = "valid@email.ltd"
     storage = "acme.json"
-    storageFile = "acme.json"
     entryPoint = "https"
     acmeLogging = true
-    onDemand = true
-    onHostRule = false
+    onHostRule  true
     caServer = "https://acme-staging.api.letsencrypt.org/directory"
+    # caServer = "https://acme-v02.api.letsencrypt.org/directory"
+      [acme.httpChallenge]
+      entryPoint="http"
     [[acme.domains]]
       main = "youhost.k8s.yourdomain.nl"
 
