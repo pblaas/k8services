@@ -1,0 +1,43 @@
+These are scratch notes to git kafka going on a kubernetes cluster and access it from the outside
+
+Install the kafka stack through helm:
+helm repo add incubator http://storage.googleapis.com/kubernetes-charts-incubator
+helm install --name my-kafka --set external.domain=yourdomain.ltd,external.servicePort=31090,external.enabled=true,external.distinct=true,persistence.size=5Gi,persistence.storageClass=gold incubator/kafka
+
+Since we are using the nodeports here you need a public routable IP or VIP attached to the node on which the kafka broker is placed.
+Also make sure the security groups allow access to the nodeport through the VIP you expose (31090 - 31092) for a 3 node cluster.
+Since a stateful set is using pod hostname in a sequenced order you can use this to create DNS record to properly resolve your kafka brokers. You need to point these DNS record to the VIPS you attached to your cluster.
+
+e.g
+my-kafka-0.yourdomain.ltd
+my-kafka-1.yourdomain.ltd
+my-kafka-2.yourdomain.ltd
+
+The following changes where required to access the kafka cluster from outside of the k8s cluster.
+
+statefulset modification:
+kubectl edit statefulset my-kafka
+
+export KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=INTERNAL_PLAINTEXT:PLAINTEXT,EXTERNAL_PLAINTEXT:PLAINTEXT,PLAINTEXT:PLAINTEXT && \
+export KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://:9092,EXTERNAL_PLAINTEXT://${HOSTNAME}.yourdomain.ltd:31090 && \
+export LISTENERS=PLAINTEXT://:9092,EXTERNAL_PLAINTEXT://:31090 && \
+
+the kafka-external services should point to the 31090 port.
+
+e.g
+my-kafka-0-external
+  - name: external-broker
+    nodePort: 31090
+    port: 31090
+    protocol: TCP
+    targetPort: 31090
+
+the nodePort need to be unique so be incremented by 1 for each additional kafka broker / service
+
+This page give a pretty good overview why access kafka from outside the k8s cluser is tedious.
+https://stackoverflow.com/questions/48757330/access-kafka-broker-outside-k8-minikube-cluster
+
+in short:
+When you first connect to a Kafka cluster you connect to a single broker and the broker returns the list of all brokers and partitions inside the Kafka cluster. The Kafka client then uses the list to interact with the brokers where the specific topic lays.
+
+The problem is that the broker lists contains by default the internal IP of the Kafka broker. Which would be in your case the container network ip. You can overwrite this value by setting advertised.listeners inside each broker's configuration.
