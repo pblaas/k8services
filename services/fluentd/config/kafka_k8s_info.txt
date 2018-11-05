@@ -19,7 +19,7 @@ statefulset modification:
 kubectl edit statefulset my-kafka
 
 export KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=INTERNAL_PLAINTEXT:PLAINTEXT,EXTERNAL_PLAINTEXT:PLAINTEXT,PLAINTEXT:PLAINTEXT && \
-export KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://:9092,EXTERNAL_PLAINTEXT://${HOSTNAME}.yourdomain.ltd:31090 && \
+export KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://:9092,EXTERNAL_PLAINTEXT://${HOSTNAME}.yourdomain.ltd:3109${KAFKA_BROKER_ID} && \
 export LISTENERS=PLAINTEXT://:9092,EXTERNAL_PLAINTEXT://:31090 && \
 
 the kafka-external services should point to the 31090 port.
@@ -31,6 +31,16 @@ my-kafka-0-external
     port: 31090
     protocol: TCP
     targetPort: 31090
+
+my-kafka-1-external
+  - name: external-broker
+    nodePort: 31091
+    port: 31091
+    protocol: TCP
+    targetPort: 31091
+
+etc..
+
 
 the nodePort need to be unique so be incremented by 1 for each additional kafka broker / service
 
