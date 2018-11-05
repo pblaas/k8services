@@ -55,6 +55,15 @@ spec:
       hostNetwork: true
       hostPID: true
       dnsPolicy: ClusterFirstWithHostNet
+      #Required for Nagoya non resolvable hostnames
+      #hostAliases:
+      #- ip: "192.168.3.10"
+      #  hostnames:
+      #  - "k8s-k8scluster-node10"
+      #- ip: "192.168.3.11"
+      #  hostnames:
+      #  - "k8s-k8scluster-node11"
+      #etc 
       containers:
         - name: alluxio-master
           image: pblaas/alluxio:1.7.1
