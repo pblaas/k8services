@@ -45,7 +45,7 @@ spec:
       #  - "k8s-k8scluster-node15"  
       containers:
         - name: alluxio-worker
-          image: pblaas/alluxio:1.8.1
+          image: pblaas/alluxio:1.7.1
           resources:
             requests:
               cpu: "0.5"
