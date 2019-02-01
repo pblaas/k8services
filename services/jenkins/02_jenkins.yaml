@@ -10,7 +10,7 @@ data:
     <?xml version='1.0' encoding='UTF-8'?>
     <hudson>
       <disabledAdministrativeMonitors/>
-      <version>2.148</version>
+      <version>2.162</version>
       <numExecutors>2</numExecutors>
       <mode>NORMAL</mode>
       <useSecurity>true</useSecurity>
@@ -139,12 +139,12 @@ data:
       <globalNodeProperties/>
     </hudson>
   plugins.txt: |+
-    kubernetes:1.13.2
-    credentials-binding:1.16
-    git:3.9.1
-    blueocean:1.9.0
-    workflow-job:2.25
-    workflow-durable-task-step:2.25
+    kubernetes:1.14.3
+    credentials-binding:1.17
+    git:4.0.0-rc
+    blueocean:1.10.2
+    workflow-job:2.26
+    workflow-durable-task-step:2.29
 kind: ConfigMap
 metadata:
   name: jenkins-configmap
