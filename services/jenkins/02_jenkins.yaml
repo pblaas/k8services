@@ -143,7 +143,7 @@ data:
     credentials-binding:1.17
     git:4.0.0-rc
     blueocean:1.10.2
-    workflow-job:2.26
+    workflow-job:2.29
     workflow-durable-task-step:2.29
 kind: ConfigMap
 metadata:
