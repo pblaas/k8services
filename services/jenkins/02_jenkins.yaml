@@ -141,7 +141,7 @@ data:
   plugins.txt: |+
     kubernetes:1.14.3
     credentials-binding:1.17
-    git:4.0.0-rc
+    git:3.0.0-rc
     blueocean:1.10.2
     workflow-job:2.31
     workflow-durable-task-step:2.29
