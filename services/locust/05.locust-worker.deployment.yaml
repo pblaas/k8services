@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: locustworker
+  namespace: loadtesting
+  labels:
+    app: locustworker
+    tool: locust
+spec:
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: locustworker
+      tier: loadtesting
+  template:
+    metadata:
+      labels:
+        app: locustworker
+        tier: loadtesting
+    spec:
+      containers:
+      - image: pblaas/locust-alpine:dev
+        resources:
+          requests:
+            cpu: "200m"
+            memory: "256Mi"
+          limits:
+            cpu: "400m"
+            memory: "512Mi"
+        name: locustworker
+        volumeMounts:
+          - name: locustfile-config
+            mountPath: /test
+        env:
+        - name: LOCUST_MODE
+          value: worker
+        - name: MASTER_HOST
+          value: locustmaster.loadtesting
+        - name: TARGET_URL
+          value: http://yourtargeturl.ltd
+        - name: SCENARIO_FILE
+          value: /test/locustfile.py
+      volumes:
+        - name: locustfile-config
+          configMap:
+            name: locustfile
